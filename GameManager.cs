@@ -9,7 +9,6 @@ public enum GameState
     EquipMode,
     Market,
     Shopping,
-    Rest,
     GameOver
 }
 
@@ -94,7 +93,6 @@ public class GameManager
                 else if (input == "2") ChangeState(GameState.Inventory);
                 else if (input == "3") ChangeState(GameState.Market);
                 else if (input == "4") ChangeState(GameState.Exploring);
-                else if (input == "5") ChangeState(GameState.Rest);
                 else if (input == "0") QuitGame();
                 break;
             case GameState.StatusMenu:
