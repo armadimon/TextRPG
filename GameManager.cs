@@ -49,10 +49,7 @@ public class GameManager
                 ? "공격력"
                 : "방어력";
 
-            string sign = marketItem[i].Stat >= 0
-                ? $"+"
-                : $"";
-            Console.WriteLine($"- {i + 1} {marketItem[i].Name} | {tag} {sign}{marketItem[i].Stat} | {marketItem[i].Desc} | {status}");
+            Console.WriteLine($"- {i + 1} {marketItem[i].Name} | {tag} {marketItem[i].Stat:+#;-#;0} | {marketItem[i].Desc} | {status}");
         }
 
         Console.WriteLine("\n1. 아이템 구매");
@@ -77,10 +74,7 @@ public class GameManager
                 ? "공격력"
                 : "방어력";
 
-            string sign = marketItem[i].Stat >= 0
-                ? $"+"
-                : $"";
-            Console.WriteLine($"- {i + 1} {marketItem[i].Name} | {tag} {sign}{marketItem[i].Stat} | {marketItem[i].Desc} | {status}");
+            Console.WriteLine($"- {i + 1} {marketItem[i].Name} | {tag} {marketItem[i].Stat:+#;-#;0} | {marketItem[i].Desc} | {status}");
         }
         Console.WriteLine("\n0. 나가기");
     }

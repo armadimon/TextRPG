@@ -60,51 +60,22 @@ public class Player
         for (int i = 0; i < inventory.Count(); i++)
         {
             string equip = "";
-            if (Weapon != null)
+            if (Weapon != null && (inventory[i].Name == Weapon.Name))
             {
-                equip = (inventory[i].Name == Weapon.Name)
-                ? "[E]"
-                : "";
+                equip = "[E]";
             }
-            if (Armor != null)
+            else if (Armor != null && (inventory[i].Name == Armor.Name))
             {
-                equip = (inventory[i].Name == Armor.Name)
-                ? "[E]"
-                : "";
+                equip = "[E]";
             }
             string tag = (inventory[i].Tag == 1)
                 ? "공격력"
                 : "방어력";
 
-            string sign = inventory[i].Stat >= 0
-                ? $"+"
-                : $"";
-            Console.WriteLine($"- {equip} {i + 1} {inventory[i].Name} | {tag} {sign}{inventory[i].Stat} | {inventory[i].Desc}");
+            Console.WriteLine($"- {equip} {i + 1}. {inventory[i].Name} | {tag} {inventory[i].Stat:+#;-#;0} | {inventory[i].Desc}");
         }
         Console.WriteLine("\n1. 장착 관리");
         Console.WriteLine("\n0. 나가기");
-    }
-
-    public void Equip(string input)
-    {
-        int ret;
-
-        if (int.TryParse(input, out ret) && (ret <= inventory.Count() && ret > 0))
-        {
-            if (inventory[ret - 1].Tag == 1)
-            {
-                Weapon = inventory[ret - 1];
-            }
-            else
-            {
-                Armor = inventory[ret - 1];
-            }
-        }
-        else
-        {
-            Console.WriteLine("\nGold 가 부족합니다. (아무키나 눌러 계속하세요.)");
-            Console.ReadLine();
-        }
     }
 
     public void EquipdManagement()
@@ -117,28 +88,58 @@ public class Player
         for (int i = 0; i < inventory.Count(); i++)
         {
             string equip = "";
-            if (Weapon != null)
+            if (Weapon != null && (inventory[i].Name == Weapon.Name))
             {
-                equip = (inventory[i].Name == Weapon.Name)
-                ? "[E]"
-                : "";
+                equip = "[E]";
             }
-            if (Armor != null)
+            else if (Armor != null && (inventory[i].Name == Armor.Name))
             {
-                equip = (inventory[i].Name == Armor.Name)
-                ? "[E]"
-                : "";
+                equip = "[E]";
             }
             string tag = (inventory[i].Tag == 1)
                 ? "공격력"
                 : "방어력";
-
-            string sign = inventory[i].Stat >= 0
-                ? $"+"
-                : $"";
-            Console.WriteLine($"- {equip} {i + 1} {inventory[i].Name} | {tag} {sign}{inventory[i].Stat} | {inventory[i].Desc}");
+            Console.WriteLine($"- {equip} {i + 1}. {inventory[i].Name} | {tag} {inventory[i].Stat:+#;-#;0} | {inventory[i].Desc}");
         }
         Console.WriteLine("\n0. 나가기");
+    }
+
+    public void Equip(string input)
+    {
+        int ret;
+
+        if (int.TryParse(input, out ret) && (ret <= inventory.Count() && ret > 0))
+        {
+            if (inventory[ret - 1].Tag == 1)
+            {
+                if (Weapon == null)
+                    Weapon = inventory[ret - 1];
+                else
+                {
+                    if (Weapon.Name == inventory[ret - 1].Name)
+                        Weapon = null;
+                    else
+                        Weapon = inventory[ret - 1];
+                }
+            }
+            else
+            {
+                if (Armor == null)
+                    Armor = inventory[ret - 1];
+                else
+                {
+                    if (Armor.Name == inventory[ret - 1].Name)
+                        Armor = null;
+                    else
+                        Armor = inventory[ret - 1];
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("\n잘못된 입력입니다.)");
+            Console.ReadLine();
+        }
     }
 
     public void PutItemToInventory(Item newItem)
@@ -148,19 +149,15 @@ public class Player
 
     public void ShowStatus()
     {
-        //string apSign = inventory[i].Stat >= 0
-        //    ? $"+"
-        //    : $"";
-        //string dpSign = Weapon.Stat >= 0
-        //    ? $"+"
-        //    : $"";
 
-        int ap = Weapon != null
-            ? Weapon.Stat
-            : 0;
-        int dp = Armor != null
-            ? Armor.Stat
-            : 0;
+        string ap = Weapon != null
+            ? $"{Weapon.Stat:+#;-#;0}"
+            : "0";
+
+        string dp = Armor != null
+            ? $"{Armor.Stat:+#;-#;0}"
+            : "0";
+
         Console.WriteLine($"상태 보기");
         Console.WriteLine($"캐릭터의 정보가 표시됩니다.\n");
 
