@@ -19,10 +19,12 @@ public class GameManager
     private GameState currentState = GameState.MainMenu;
     private bool isRunning = true;
     private Market market;
+    private Dungeon dungeon;
 
     public GameManager()
     {
         market = new Market();
+        dungeon = new Dungeon();
     }
 
 

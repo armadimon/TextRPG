@@ -8,6 +8,5 @@ class TextRPG
 
 
         gameManager.Run();
-
     }
 }
