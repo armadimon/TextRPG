@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 
 public enum GameState
 {
@@ -18,103 +18,17 @@ public class GameManager
 {
     private GameState currentState = GameState.MainMenu;
     private bool isRunning = true;
-    private List<Item> marketItem;
+    private Market market;
 
     public GameManager()
     {
-        marketItem = new List<Item>();
-        marketItem.Add(new Item(1, 10, 1000, "Á¶ÀâÇÑ ¼ÒÃÑ", "´©±º°¡ ºÎÇ°µéÀ» Á¶¸³ÇØ ¸¸µç Á¶ÀâÇÑ ¼ÒÃÑÀÔ´Ï´Ù."));
-        marketItem.Add(new Item(1, 15, 1500, "°³Á¶µÈ ³×ÀÏ°Ç", "°ø¾÷¿ë ³×ÀÏ°ÇÀ» °³Á¶ÇÏ¿© À§·ÂÀ» °­È­ÇÑ ¹«±âÀÔ´Ï´Ù."));
-        marketItem.Add(new Item(1, 30, 3000, "°¡¿ì½º ¼ÒÃÑ", "ÀüÀÚ±âÀåÀÇ ÈûÀ¸·Î ÅºÈ¯À» ½î¾Æ³»´Â °­·ÂÇÑ ¹«±âÀÔ´Ï´Ù."));
-        marketItem.Add(new Item(2, 10, 1000, "Çã¸§ÇÑ °¡Á× ¿Ê", "»ıÁ¸ÀÚ Ä·ÇÁ¿¡¼­ ÈçÇÏ°Ô º¼ ¼ö ÀÖ´Â ¿ÊÀÔ´Ï´Ù."));
-        marketItem.Add(new Item(2, 15, 1500, "¿À·¡µÈ ±ºº¹", "´©±º°¡ÀÇ ¿À·¡µÈ ±ºº¹ÀÔ´Ï´Ù. ¸¹ÀÌ ³°¾ÒÁö¸¸ ¾ÆÁ÷ Æ°Æ°ÇÕ´Ï´Ù."));
-        marketItem.Add(new Item(2, 30, 3000, "¼ö¼±µÈ Á¤Âû´ë ÀüÅõº¹", "»ıÁ¸ÀÚ Ä·ÇÁÀÇ ¹æÀ§¿Í Á¤ÂûÀ» Ã¥ÀÓÁö´Â Á¤Âû´ëÀÇ ±ºº¹ÀÔ´Ï´Ù."));
+        market = new Market();
     }
 
-    private void OpenMarket(Player player)
-    {
-        Console.WriteLine("\n[»óÁ¡]");
-        Console.WriteLine("ÇÊ¿äÇÑ ¾ÆÀÌÅÛÀ» ¾òÀ» ¼ö ÀÖ´Â »óÁ¡ÀÔ´Ï´Ù.");
-        Console.WriteLine("\n[º¸À¯ °ñµå]");
-        Console.WriteLine("\n" + player.Gold);
-
-        Console.WriteLine("\n[¾ÆÀÌÅÛ ¸ñ·Ï]");
-        for (int i = 0; i < marketItem.Count(); i++)
-        {
-            string status = player.HasItem(marketItem[i].Name)
-                ? "±¸¸Å ¿Ï·á"
-                : $"{marketItem[i].Value}";
-
-            string tag = (marketItem[i].Tag == 1)
-                ? "°ø°İ·Â"
-                : "¹æ¾î·Â";
-
-            Console.WriteLine($"- {i + 1} {marketItem[i].Name} | {tag} {marketItem[i].Stat:+#;-#;0} | {marketItem[i].Desc} | {status}");
-        }
-
-        Console.WriteLine("\n1. ¾ÆÀÌÅÛ ±¸¸Å");
-        Console.WriteLine("\n0. ³ª°¡±â");
-    }
-
-    private void ShoppingMode(Player player)
-    {
-        Console.WriteLine("\n[»óÁ¡ - ¾ÆÀÌÅÛ ±¸¸Å]");
-        Console.WriteLine("\n[º¸À¯ °ñµå]");
-        Console.WriteLine("\n" + player.Gold);
-
-
-        Console.WriteLine("\n[¾ÆÀÌÅÛ ¸ñ·Ï]");
-        for (int i = 0; i < marketItem.Count(); i++)
-        {
-            string status = player.HasItem(marketItem[i].Name)
-                ? "±¸¸Å ¿Ï·á"
-                : $"{marketItem[i].Value}";
-
-            string tag = (marketItem[i].Tag == 1)
-                ? "°ø°İ·Â"
-                : "¹æ¾î·Â";
-
-            Console.WriteLine($"- {i + 1} {marketItem[i].Name} | {tag} {marketItem[i].Stat:+#;-#;0} | {marketItem[i].Desc} | {status}");
-        }
-        Console.WriteLine("\n0. ³ª°¡±â");
-    }
-
-    private void BuyItem(String input, Player player)
-    {
-        int ret;
-        if (int.TryParse(input, out ret) && (ret <= marketItem.Count() && ret > 0))
-        {
-            if (!player.HasItem(marketItem[ret - 1].Name))
-            {
-                if (player.Gold >= marketItem[ret - 1].Value)
-                {
-                    player.Gold -= marketItem[ret - 1].Value;
-                    player.PutItemToInventory(marketItem[ret - 1]);
-                    Console.WriteLine("\n¾ÆÀÌÅÛÀ» ±¸¸ÅÇÏ¿´½À´Ï´Ù!");
-                    Console.ReadLine();
-                }
-                else
-                {
-                    Console.WriteLine("\nGold °¡ ºÎÁ·ÇÕ´Ï´Ù.");
-                    Console.ReadLine();
-                }
-            }
-            else
-            {
-                Console.WriteLine("\nÀÌ¹Ì ±¸¸ÅÇÑ ¾ÆÀÌÅÛÀÔ´Ï´Ù!");
-                Console.ReadLine();
-            }
-        }
-        else
-        {
-            Console.WriteLine("\nGold °¡ ºÎÁ·ÇÕ´Ï´Ù.");
-            Console.ReadLine();
-        }
-    }
 
     public void Run()
     {
-        Console.WriteLine("»ıÁ¸ÀÚ Ä·ÇÁ¿¡ ¿À½Å°É È¯¿µÇÕ´Ï´Ù. ÀÌ°÷Àº ÇÙÀüÀï ÀÌÈÄ ³²°ÜÁø ¸î ¾ÈµÇ´Â ¸¶À» Áß ÇÏ³ªÀÔ´Ï´Ù.\n¸ÕÀú ´ç½ÅÀÇ ÀÌ¸§À» ¾Ë·ÁÁÖ¼¼¿ä.");
+        Console.WriteLine("ìƒì¡´ì ìº í”„ì— ì˜¤ì‹ ê±¸ í™˜ì˜í•©ë‹ˆë‹¤. ì´ê³³ì€ í•µì „ìŸ ì´í›„ ë‚¨ê²¨ì§„ ëª‡ ì•ˆë˜ëŠ” ë§ˆì„ ì¤‘ í•˜ë‚˜ì…ë‹ˆë‹¤.\në¨¼ì € ë‹¹ì‹ ì˜ ì´ë¦„ì„ ì•Œë ¤ì£¼ì„¸ìš”.");
         Player player = new Player(Console.ReadLine());
 
         while (isRunning)
@@ -127,26 +41,26 @@ public class GameManager
     private void DisplayMenu(Player player)
     {
         Console.Clear();
-        Console.WriteLine($"ÇöÀç »óÅÂ: {currentState}");
+        Console.WriteLine($"í˜„ì¬ ìƒíƒœ: {currentState}");
 
         switch (currentState)
         {
             case GameState.MainMenu:
-                Console.WriteLine("\n[Ä·ÇÁ ÀÔ±¸]");
-                Console.WriteLine("\n1. »óÅÂ º¸±â");
-                Console.WriteLine("2. ÀÎº¥Åä¸®");
-                Console.WriteLine("3. »óÁ¡");
-                Console.WriteLine("4. Å½»ç Ãâ¹ß");
-                Console.WriteLine("5. ÈŞ½ÄÇÏ±â");
-                Console.WriteLine("0. Á¾·á");
+                Console.WriteLine("\n[ìº í”„ ì…êµ¬]");
+                Console.WriteLine("\n1. ìƒíƒœ ë³´ê¸°");
+                Console.WriteLine("2. ì¸ë²¤í† ë¦¬");
+                Console.WriteLine("3. ìƒì ");
+                Console.WriteLine("4. íƒì‚¬ ì¶œë°œ");
+                Console.WriteLine("5. íœ´ì‹í•˜ê¸°");
+                Console.WriteLine("0. ì¢…ë£Œ");
                 break;
             case GameState.StatusMenu:
                 player.ShowStatus();
-                Console.WriteLine("1. Ä·ÇÁ ÀÔ±¸·Î µ¹¾Æ°¡±â");
+                Console.WriteLine("0. ìº í”„ ì…êµ¬ë¡œ ëŒì•„ê°€ê¸°");
                 break;
             case GameState.Exploring:
-                Console.WriteLine("\n[Å½Çè Áß]");
-                Console.WriteLine("\n1. Ä·ÇÁ ÀÔ±¸·Î µ¹¾Æ°¡±â");
+                Console.WriteLine("\n[íƒí—˜ ì¤‘]");
+                Console.WriteLine("\n0. ìº í”„ ì…êµ¬ë¡œ ëŒì•„ê°€ê¸°");
                 break;
             case GameState.Inventory:
                 player.ShowInventory();
@@ -155,21 +69,21 @@ public class GameManager
                 player.EquipdManagement();
                 break;
             case GameState.Market:
-                OpenMarket(player);
+                market.DisplayMarket(player);
                 break;
             case GameState.Shopping:
-                ShoppingMode(player);
+                market.DisplayShopping(player);
                 break;
             case GameState.GameOver:
-                Console.WriteLine("\n[°ÔÀÓ ¿À¹ö]");
-                Console.WriteLine("1. Ä·ÇÁ ÀÔ±¸·Î µ¹¾Æ°¡±â");
+                Console.WriteLine("\n[ê²Œì„ ì˜¤ë²„]");
+                Console.WriteLine("0. ìº í”„ ì…êµ¬ë¡œ ëŒì•„ê°€ê¸°");
                 break;
         }
     }
 
     private void HandleInput(Player player)
     {
-        Console.WriteLine("\n¿øÇÏ½Ã´Â Çàµ¿À» ÀÔ·ÂÇØÁÖ¼¼¿ä. ");
+        Console.WriteLine("\nì›í•˜ì‹œëŠ” í–‰ë™ì„ ì…ë ¥í•´ì£¼ì„¸ìš”. ");
         Console.Write(">> ");
         string input = Console.ReadLine();
 
@@ -184,10 +98,10 @@ public class GameManager
                 else if (input == "0") QuitGame();
                 break;
             case GameState.StatusMenu:
-                if (input == "1") ChangeState(GameState.MainMenu);
+                if (input == "0") ChangeState(GameState.MainMenu);
                 break;
             case GameState.Exploring:
-                if (input == "1") ChangeState(GameState.MainMenu);
+                if (input == "0") ChangeState(GameState.MainMenu);
                 break;
             case GameState.Market:
                 if (input == "1")
@@ -199,7 +113,7 @@ public class GameManager
                 if (input == "0")
                     ChangeState(GameState.Market);
                 else
-                    BuyItem(input, player);
+                    market.BuyItem(input, player);
                 break;
             case GameState.Inventory:
                 if (input == "1")
@@ -214,7 +128,7 @@ public class GameManager
                     player.Equip(input);
                 break;
             case GameState.GameOver:
-                if (input == "1")
+                if (input == "0")
                     ChangeState(GameState.MainMenu);
                 break;
         }
@@ -227,7 +141,7 @@ public class GameManager
 
     private void QuitGame()
     {
-        Console.WriteLine("°ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù.");
+        Console.WriteLine("ê²Œì„ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
         isRunning = false;
     }
 }

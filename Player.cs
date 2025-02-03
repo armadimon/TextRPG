@@ -39,19 +39,6 @@ public class Player
         return (false);
     }
 
-
-    public bool IsEquipped(string itemName)
-    {
-        for (int i = 0; i < inventory.Count(); i++)
-        {
-            if (inventory[i].Name == itemName)
-            {
-                return (true);
-            }
-        }
-        return (false);
-    }
-
     public void ShowInventory()
     {
         Console.WriteLine("\n[인벤토리]");
@@ -161,7 +148,7 @@ public class Player
         Console.WriteLine($"상태 보기");
         Console.WriteLine($"캐릭터의 정보가 표시됩니다.\n");
 
-        Console.WriteLine($"Lv . {Level:N2}");
+        Console.WriteLine($"Lv . {Level:D2}");
         Console.WriteLine($"{Name} ({Description})");
         Console.WriteLine($"공격력 : {AttackDamage} ({ap})");
         Console.WriteLine($"방어력 : {DeffencePoint} ({dp})");
