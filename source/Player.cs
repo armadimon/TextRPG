@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 public class Player
 {
@@ -11,6 +12,8 @@ public class Player
     public int Level { get; set; }
     public Item? Weapon { get; set; }
     public Item? Armor { get; set; }
+
+    [JsonInclude]
     public List<Item> inventory;
 
     public Player(string name)

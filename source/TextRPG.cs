@@ -6,7 +6,6 @@ class TextRPG
 {
     private static void Main()
     {
-        Title title = new Title();
         GameManager gameManager = new GameManager();
 
         gameManager.Run();

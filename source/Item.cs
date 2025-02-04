@@ -1,5 +1,6 @@
 using System;
 
+//[Serializable]
 public class Item
 {
     // Tag 1 = AttackPoint, Tag 2 = DeffencePoint
