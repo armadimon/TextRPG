@@ -20,7 +20,15 @@ class Title
     private Player CreateNewPlayer()
     {
         Console.Write("이름을 입력하세요 >> ");
-        return (new Player(Console.ReadLine()));
+        string? name = Console.ReadLine();
+
+        if (string.IsNullOrEmpty(name))
+        {
+            name = "Default";
+        }
+
+        Player player = new Player(name);
+        return player;
     }
 
     public Player NewPlayerData()
@@ -32,13 +40,13 @@ class Title
     public Player LoadPlayerData()
     {
         string jsonData;
-        Player player = null;
-        if (File.Exists("player.json"))
+        Player player;
+        if (File.Exists("save.json"))
         {
             jsonData = File.ReadAllText("save.json");
             try
             {
-                player = JsonSerializer.Deserialize<Player>(jsonData);
+                player = JsonSerializer.Deserialize<Player>(jsonData) ?? throw new Exception("Deserialize의 결과가 null입니다.");
             }
             catch (Exception exception)
             {

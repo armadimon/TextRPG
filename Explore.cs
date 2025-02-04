@@ -69,9 +69,7 @@ public abstract class Exploration
 
             Console.WriteLine("\n[탐험 결과]");
             Console.Write($"체력 {player.Health}  ->");
-            if (successRate < 100)
-                ;
-            else
+            if (successRate == 100)
                 healthLoss -= (totalDP - RequiredDefense);
             player.Health -= healthLoss;
             Console.WriteLine(player.Health);

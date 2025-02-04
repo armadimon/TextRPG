@@ -25,7 +25,7 @@ public class GameManager
     private ExplorationManager exploration;
     private Rest rest;
     private Title title;
-    public Player player = null;
+    public Player player = new Player("Default");
 
 
     public GameManager()
@@ -110,7 +110,7 @@ public class GameManager
     {
         Console.WriteLine("\n원하시는 행동을 입력해주세요. ");
         Console.Write(">> ");
-        string input = Console.ReadLine();
+        string input = Console.ReadLine() ?? "";
 
         switch (currentState)
         {
