@@ -124,7 +124,7 @@ public class Player
         }
         else
         {
-            Console.WriteLine("\n잘못된 입력입니다.)");
+            Console.WriteLine("\n잘못된 입력입니다.");
             Console.ReadLine();
         }
     }

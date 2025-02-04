@@ -10,11 +10,11 @@ public enum GameState
     Exploring,
     Inventory,
     EquipMode,
-    Selling,
     Market,
-    Rest,
     Shopping,
-    GameOver
+    Selling,
+    Rest,
+    KnockedOut
 }
 
 
@@ -60,8 +60,8 @@ public class GameManager
     private void DisplayMenu(Player player)
     {
         Console.Clear();
-        Console.WriteLine($"현재 상태: {currentState}");
-
+        if (player.Health < 0)
+            currentState = GameState.KnockedOut;
         switch (currentState)
         {
             case GameState.TitleMenu:
@@ -103,9 +103,14 @@ public class GameManager
             case GameState.Rest:
                 rest.DisplayRestMenu(player);
                 break;
-            case GameState.GameOver:
-                Console.WriteLine("\n[게임 오버]");
-                Console.WriteLine("0. 캠프 입구로 돌아가기");
+            case GameState.KnockedOut:
+                Console.WriteLine("\n[기절]");
+                Console.WriteLine("\n- 체력이 부족해 기절하였습니다...");
+                Console.WriteLine($"\n체력 : {this.player.Health} => 5");
+                Console.WriteLine($"Gold : {this.player.Gold} => {this.player.Gold / 2}");
+                Console.WriteLine("\n아무 키나 입력하면 캠프 입구로 돌아갑니다.");
+                this.player.Health = 5;
+                this.player.Gold /= 2;
                 break;
         }
     }
@@ -189,8 +194,7 @@ public class GameManager
                 else if (input == "1")
                     rest.UseRest(player);
                 break;
-            case GameState.GameOver:
-                if (input == "0")
+            case GameState.KnockedOut:
                     ChangeState(GameState.MainMenu);
                 break;
         }
