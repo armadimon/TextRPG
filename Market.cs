@@ -93,7 +93,7 @@ public class Market
         }
         else
         {
-            Console.WriteLine("\nGold 가 부족합니다.");
+            Console.WriteLine("\n잘못된 입력입니다.");
             Console.ReadLine();
         }
     }

@@ -5,7 +5,7 @@ public class Player
     public string Name { get; set; }
     public string Description { get; set; }
     public int AttackDamage { get; set; }
-    public int DeffencePoint { get; set; }
+    public int DefensePoint { get; set; }
     public int Health { get; set; }
     public int Gold { get; set; }
     public int Level { get; set; }
@@ -19,7 +19,7 @@ public class Player
         Level = 1;
         Description = "용병";
         AttackDamage = 10;
-        DeffencePoint = 5;
+        DefensePoint = 5;
         Health = 100;
         Gold = 15000;
         Weapon = null;
@@ -151,7 +151,7 @@ public class Player
         Console.WriteLine($"Lv . {Level:D2}");
         Console.WriteLine($"{Name} ({Description})");
         Console.WriteLine($"공격력 : {AttackDamage} ({ap})");
-        Console.WriteLine($"방어력 : {DeffencePoint} ({dp})");
+        Console.WriteLine($"방어력 : {DefensePoint} ({dp})");
         Console.WriteLine($"체력 : {Health}");
         Console.WriteLine($"Gold : {Gold} G");
     }

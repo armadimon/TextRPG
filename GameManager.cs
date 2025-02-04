@@ -6,7 +6,7 @@ public enum GameState
     StatusMenu,
     Exploring,
     Inventory,
-    EquipMode,
+    EquipMode,  
     Market,
     Shopping,
     Rest,
@@ -19,12 +19,14 @@ public class GameManager
     private GameState currentState = GameState.MainMenu;
     private bool isRunning = true;
     private Market market;
-    private Dungeon dungeon;
+    private ExplorationManager exploration;
+    private Rest rest;
 
     public GameManager()
     {
         market = new Market();
-        dungeon = new Dungeon();
+        exploration = new ExplorationManager();
+        rest = new Rest();
     }
 
 
@@ -61,8 +63,7 @@ public class GameManager
                 Console.WriteLine("0. 캠프 입구로 돌아가기");
                 break;
             case GameState.Exploring:
-                Console.WriteLine("\n[탐험 중]");
-                Console.WriteLine("\n0. 캠프 입구로 돌아가기");
+                exploration.DisplayExplorationMenu(player);
                 break;
             case GameState.Inventory:
                 player.ShowInventory();
@@ -75,6 +76,9 @@ public class GameManager
                 break;
             case GameState.Shopping:
                 market.DisplayShopping(player);
+                break;
+            case GameState.Rest:
+                rest.DisplayRestMenu(player);
                 break;
             case GameState.GameOver:
                 Console.WriteLine("\n[게임 오버]");
@@ -103,7 +107,10 @@ public class GameManager
                 if (input == "0") ChangeState(GameState.MainMenu);
                 break;
             case GameState.Exploring:
-                if (input == "0") ChangeState(GameState.MainMenu);
+                if (input == "0")
+                    ChangeState(GameState.MainMenu);
+                else
+                    exploration.HandleExplore(input, player);
                 break;
             case GameState.Market:
                 if (input == "1")
@@ -128,6 +135,12 @@ public class GameManager
                     ChangeState(GameState.Inventory);
                 else
                     player.Equip(input);
+                break;
+            case GameState.Rest:
+                if (input == "0")
+                    ChangeState(GameState.MainMenu);
+                else if (input == "1")
+                    rest.UseRest(player);
                 break;
             case GameState.GameOver:
                 if (input == "0")
