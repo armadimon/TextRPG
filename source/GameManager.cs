@@ -17,7 +17,6 @@ public enum GameState
     KnockedOut
 }
 
-
 public class GameManager
 {
     private GameState currentState = GameState.TitleMenu;
@@ -37,11 +36,8 @@ public class GameManager
         title = new Title();
     }
 
-
-
     public void Run()
     {
-
         while (isRunning)
         {
             DisplayMenu(player);

@@ -24,7 +24,7 @@ public class Player
         AttackDamage = 10;
         DefensePoint = 5;
         Health = 100;
-        Gold = 15000;
+        Gold = 1500;
         Weapon = null;
         Armor = null;
         inventory = new List<Item>();
