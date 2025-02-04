@@ -9,8 +9,10 @@ public enum GameState
     StatusMenu,
     Exploring,
     Inventory,
-    EquipMode,  
+    EquipMode,
+    Selling,
     Market,
+    Rest,
     Shopping,
     GameOver
 }
@@ -95,6 +97,9 @@ public class GameManager
             case GameState.Shopping:
                 market.DisplayShopping(player);
                 break;
+            case GameState.Selling:
+                market.DisplaySellMenu(player);
+                break;
             case GameState.Rest:
                 rest.DisplayRestMenu(player);
                 break;
@@ -149,6 +154,8 @@ public class GameManager
             case GameState.Market:
                 if (input == "1")
                     ChangeState(GameState.Shopping);
+                if (input == "2")
+                    ChangeState(GameState.Selling);
                 else if (input == "0")
                     ChangeState(GameState.MainMenu);
                 break;
@@ -157,6 +164,12 @@ public class GameManager
                     ChangeState(GameState.Market);
                 else
                     market.BuyItem(input, player);
+                break;
+            case GameState.Selling:
+                if (input == "0")
+                    ChangeState(GameState.Market);
+                else
+                    market.SellItem(input, player);
                 break;
             case GameState.Inventory:
                 if (input == "1")

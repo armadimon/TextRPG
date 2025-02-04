@@ -11,7 +11,7 @@ public class Player
     public int Level { get; set; }
     public Item? Weapon { get; set; }
     public Item? Armor { get; set; }
-    private List<Item> inventory;
+    public List<Item> inventory;
 
     public Player(string name)
     {
@@ -131,7 +131,29 @@ public class Player
 
     public void PutItemToInventory(Item newItem)
     {
-        inventory.Add(newItem);
+        if (newItem != null)
+        {
+            inventory.Add(newItem);
+        }
+        else
+        {
+            Console.WriteLine("\n추가 가능한 아이템이 없습니다!");
+            Console.ReadLine();
+        }
+    }
+
+    public void RemoveItemFromInventory(Item newItem)
+    {
+        Item? targetItem = inventory.Find(item => item.Name == newItem.Name);
+        if (targetItem != null)
+        {
+            inventory.Remove(targetItem);
+        }
+        else
+        {
+            Console.WriteLine("\n팔 수 있는 아이템이 없습니다!");
+            Console.ReadLine();
+        }
     }
 
     public void ShowStatus()

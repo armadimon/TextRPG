@@ -22,7 +22,7 @@ public class Market
         Console.WriteLine("\n[상점]");
         Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
         Console.WriteLine("\n[보유 골드]");
-        Console.WriteLine("\n" + player.Gold);
+        Console.WriteLine(player.Gold + "G");
 
         Console.WriteLine("\n[아이템 목록]");
         for (int i = 0; i < marketItem.Count(); i++)
@@ -39,6 +39,7 @@ public class Market
         }
 
         Console.WriteLine("\n1. 아이템 구매");
+        Console.WriteLine("\n2. 아이템 판매");
         Console.WriteLine("\n0. 나가기");
     }
 
@@ -63,6 +64,58 @@ public class Market
             Console.WriteLine($"- {i + 1} {marketItem[i].Name} | {tag} {marketItem[i].Stat:+#;-#;0} | {marketItem[i].Desc} | {status}");
         }
         Console.WriteLine("\n0. 나가기");
+    }
+
+    public void DisplaySellMenu(Player player)
+    {
+        Console.WriteLine("\n[상점 - 아이템 판매]");
+        Console.WriteLine("소지한 아이템을 팔 수 있는 상점입니다.");
+        Console.WriteLine("\n[보유 골드]");
+        Console.WriteLine(player.Gold + "G");
+
+
+        Console.WriteLine("\n[아이템 목록]");
+        for (int i = 0; i < player.inventory.Count(); i++)
+        {
+            string equip = "";
+            if (player.Weapon != null && (player.inventory[i].Name == player.Weapon.Name))
+            {
+                equip = "[E]";
+            }
+            else if (player.Armor != null && (player.inventory[i].Name == player.Armor.Name))
+            {
+                equip = "[E]";
+            }
+            string tag = (player.inventory[i].Tag == 1)
+                ? "공격력"
+                : "방어력";
+
+            Console.WriteLine($"- {equip} {i + 1}. {player.inventory[i].Name} | {tag} {player.inventory[i].Stat:+#;-#;0} | {player.inventory[i].Desc}");
+        }
+        Console.WriteLine("\n0. 나가기");
+    }
+
+    public void SellItem(String input, Player player)
+    {
+        int ret;
+        if (int.TryParse(input, out ret) && (ret <= player.inventory.Count() && ret > 0))
+        {
+            int sellValue = (player.inventory[ret - 1].Value * 85) / 100;
+            player.Gold += sellValue;
+            if (player.inventory[ret - 1].Name == player.Weapon?.Name)
+                player.Weapon = null;
+            else if (player.inventory[ret - 1].Name == player.Armor?.Name)
+                player.Armor = null;
+            player.RemoveItemFromInventory(player.inventory[ret - 1]);
+            Console.WriteLine("\n아이템을 판매하였습니다!");
+
+            Console.ReadLine();
+        }
+        else
+        {
+            Console.WriteLine("\n잘못된 입력입니다.");
+            Console.ReadLine();
+        }
     }
 
     public void BuyItem(String input, Player player)
