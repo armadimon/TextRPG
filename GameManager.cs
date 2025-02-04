@@ -51,7 +51,7 @@ public class GameManager
     public void Save(Player player)
     {
         string json = JsonSerializer.Serialize(player);
-        File.WriteAllText("player.json", json);
+        File.WriteAllText("save.json", json);
         Console.WriteLine("게임이 저장되었습니다!");
         Console.ReadLine();
     }

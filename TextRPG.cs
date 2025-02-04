@@ -32,11 +32,20 @@ class Title
     public Player LoadPlayerData()
     {
         string jsonData;
-        Player player;
+        Player player = null;
         if (File.Exists("player.json"))
         {
-            jsonData = File.ReadAllText("player.json");
-            player = JsonSerializer.Deserialize<Player>(jsonData);
+            jsonData = File.ReadAllText("save.json");
+            try
+            {
+                player = JsonSerializer.Deserialize<Player>(jsonData);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"저장된 데이터가 손상되었습니다. 새로운 캐릭터를 생성합니다.");
+                Console.WriteLine($"에러 : {exception.Message}\n");
+                player = CreateNewPlayer();
+            }
         }
         else
         {
