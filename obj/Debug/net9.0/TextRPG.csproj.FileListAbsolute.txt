@@ -13,3 +13,8 @@ D:\csprac\TextRPG\TextRPG\obj\Debug\net9.0\refint\TextRPG.dll
 D:\csprac\TextRPG\TextRPG\obj\Debug\net9.0\TextRPG.pdb
 D:\csprac\TextRPG\TextRPG\obj\Debug\net9.0\TextRPG.genruntimeconfig.cache
 D:\csprac\TextRPG\TextRPG\obj\Debug\net9.0\ref\TextRPG.dll
+D:\csprac\TextRPG\TextRPG\net9.0\TextRPG.exe
+D:\csprac\TextRPG\TextRPG\net9.0\TextRPG.deps.json
+D:\csprac\TextRPG\TextRPG\net9.0\TextRPG.runtimeconfig.json
+D:\csprac\TextRPG\TextRPG\net9.0\TextRPG.dll
+D:\csprac\TextRPG\TextRPG\net9.0\TextRPG.pdb
