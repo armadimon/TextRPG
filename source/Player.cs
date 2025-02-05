@@ -5,11 +5,12 @@ public class Player
 {
     public string Name { get; set; }
     public string Description { get; set; }
-    public int AttackDamage { get; set; }
+    public double AttackDamage { get; set; }
     public int DefensePoint { get; set; }
     public int Health { get; set; }
     public int Gold { get; set; }
     public int Level { get; set; }
+    public int ClearCount { get; set; }
     public Item? Weapon { get; set; }
     public Item? Armor { get; set; }
 

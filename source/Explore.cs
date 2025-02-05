@@ -47,7 +47,7 @@ public abstract class Exploration
         int successRate = 0;
         int healthLoss = rnd.Next(20, 35);
         int totalDP = player.DefensePoint + (player.Armor?.Stat ?? 0);
-        int totalAP = player.AttackDamage + (player.Weapon?.Stat ?? 0);
+        double totalAP = (player.AttackDamage + (double)(player.Weapon?.Stat ?? 0)) * 100;
         if (totalDP >= RequiredDefense)
             successRate = 100;
         else
@@ -68,6 +68,8 @@ public abstract class Exploration
 
 
             Console.WriteLine("\n[탐험 결과]");
+
+
             Console.Write($"체력 {player.Health}  ->");
             if (successRate == 100)
                 healthLoss -= (totalDP - RequiredDefense);
@@ -75,11 +77,32 @@ public abstract class Exploration
             Console.WriteLine(player.Health);
             Console.Write($"Gold {player.Gold} G ->");
 
-            int bonusPercentage = rnd.Next(totalAP, totalAP * 2 + 1);
-            int bonusReward = (ClearReward * bonusPercentage) / 100;
+            int bonusPercentage = rnd.Next((int)totalAP, (int)totalAP * 2 + 1);
+            int bonusReward = (ClearReward * bonusPercentage) / 10000;
             int totalReward = ClearReward + bonusReward;
             player.Gold += totalReward;
             Console.WriteLine($"{player.Gold} G");
+
+            player.ClearCount++;
+            if (player.ClearCount == player.Level)
+            {
+                Console.WriteLine($"\n[레벨 업!!]\n");
+
+
+                Console.Write($"Lv. {player.Level} -> Lv 0.");
+                player.Level++;
+                Console.WriteLine($"{player.Level}");
+
+                Console.Write($"공격력 : {player.AttackDamage} -> ");
+                player.AttackDamage += 0.5;
+                Console.WriteLine($"{player.AttackDamage}");
+
+                Console.Write($"방어력 : {player.DefensePoint} -> ");
+                player.DefensePoint += 1;
+                Console.WriteLine($"{player.DefensePoint}");
+
+                player.ClearCount = 0;
+            }
 
             Console.ReadLine();
         }
